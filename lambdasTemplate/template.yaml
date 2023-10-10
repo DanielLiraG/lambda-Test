@@ -1,0 +1,11 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Transform: AWS::Serverless-2016-10-31
+Description: An AWS Lambda application that update the actions register and create new values of residual risk.
+Resources:
+  lambdasTemplate:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: index.handler
+      CodeUri: dist/src/
+      Runtime: nodejs18.x
+      Timeout: 10000000

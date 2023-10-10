@@ -1,0 +1,13 @@
+venv
+__pycache__
+lambda_to_zip
+node_modules
+.aws-sam
+*.zip
+layers
+dependencies
+dist
+.vscode
+
+.env
+coverage/
