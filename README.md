@@ -6,7 +6,7 @@ NOTA: debe utilizar nodejs18.x para el desarrollo de las lambdas. **NO** debe mo
 
 ## Primera parte
 
-Utilizando como referencia la carpeta lambdasTemplate, deberá desarrollar una lambda hecha con typescript, la cual al ser ejecutada deberá extraer la información de los Pokémon desde el número 43 hasta el 76, donde debe obtener el nombre, altura, peso y las estadísticas del mismo con sus valores. Posteriormente, debe reorganizar la información de cada Pokémon de manera que el nombre de las estadísticas pasen a ser una key dentro del objeto del Pokémon y tenga su valor base, como se muestra en el siguiente ejemplo:
+Utilizando como referencia la carpeta lambdasTemplate, deberá desarrollar una lambda hecha con typescript, la cual al ser ejecutada deberá extraer la información de los Pokémon desde el número 43 hasta el 76, donde debe obtener el nombre, altura, peso y las estadísticas del mismo con sus valores. Posteriormente, debe reorganizar la información de cada Pokémon de manera que el nombre de las estadísticas pasen a ser una key dentro del objeto del Pokémon y tenga su valor base (agregue todas las estadísticas y no solo las que se observan en el ejemplo), como se muestra en el siguiente ejemplo:
 
 ```
 {
