@@ -1,12 +1,10 @@
-**Prueba técnica para Smartcompliance**
+# Prueba técnica - AWS Lambdas
 
-El proyecto corresponde a la prueba técnica para aplicar a Smartcompliance.
-
-La prueba consiste en la creación de una AWS lambda hecha con typescript, utilizando graphql para consumir data de una base de datos y modificarla para enviarla como respuesta.
+La prueba consiste en la creación de AWS lambdas hechas con typescript, utilizando graphql para consumir data de una base de datos y modificarla para enviarla como respuesta.
 
 NOTA: debe utilizar nodejs18.x para el desarrollo de las lambdas. **NO** debe modificar los archivos .eslintrc.js, .prettierrc.js, jest.config.js.
 
-**Primera parte**
+## Primera parte
 
 Utilizando como referencia la carpeta lambdasTemplate, deberá desarrollar una lambda hecha con typescript, la cual al ser ejecutada deberá extraer la información de los Pokémon desde el número 43 hasta el 76, donde debe obtener el nombre, altura, peso y las estadísticas del mismo con sus valores. Posteriormente, debe reorganizar la información de cada Pokémon de manera que el nombre de las estadísticas pasen a ser una key dentro del objeto del Pokémon y tenga su valor base, como se muestra en el siguiente ejemplo:
 
@@ -32,13 +30,24 @@ Finalmente, los cambios deben enviarse como un array en la respuesta de la funci
 }
 ```
 
-
 Todas las consultas a la pokeapi deben realizarse utilizando graphql a través de su link beta (<https://beta.pokeapi.co/graphql/v1beta>)
 
-Consideraciones: 
+Consideraciones:
 
 - Utilice clases para el desarrollo de la lambda.
-- Intente implementar los principios SOLID.
+- Implemente los principios SOLID.
 - Organice en carpetas todo lo desarrollado.
 - Cree test unitarios utilizando jest.
 - Utilice AWS sam-cli para ejecutar la lambda, ya que al utilizar el script execute.sh debe funcionar.
+
+## Segunda Parte
+
+Utilizando el archivo de consultas.js, el cual contiene una lógica de Web scraping para la extracción de los valores actuales de la unidad tributaria de un país. Cree una AWS lambda con typescript refactorizando el código implementado en consultas.js.
+
+Requerimientos:
+
+- Utilice clases al refectorizar.
+- Cambiar request-promise, utilizando otro mecanismo para realizar las peticiones.
+- Utilizar las url que le serán enviadas con la prueba.
+- Puede utilizar o cambiar cualquier librería.
+- Debe mantener la estructura de la respuesta y los parámetros de entrada de la función.
