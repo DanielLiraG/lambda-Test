@@ -42,12 +42,14 @@ Consideraciones:
 
 ## Segunda Parte
 
-Utilizando el archivo de consultas.js, el cual contiene una lógica de Web scraping para la extracción de los valores actuales de la unidad tributaria de un país. Cree una AWS lambda con typescript refactorizando el código implementado en consultas.js.
+Utilizando el archivo consultas.js, que contiene la lógica de Web scraping para extraer los valores actuales de la unidad tributaria de un país, se debe crear una AWS Lambda con TypeScript refactorizando el código implementado en consultas.js.
+
+En la lógica de consultas, se ha identificado un error donde los primeros días del año no tienen información disponible, lo que provoca que la función retorne null como respuesta. Considerando esto, se debe corregir de manera que, en esos casos, se retorne el último valor del año anterior.
 
 Requerimientos:
 
 - Utilice clases al refectorizar.
-- Cambiar request-promise, utilizando otro mecanismo para realizar las peticiones.
+- Cambiar la libreria request-promise por fetch.
 - Utilizar las url que le serán enviadas con la prueba.
 - Puede utilizar o cambiar cualquier librería.
 - Debe mantener la estructura de la respuesta y los parámetros de entrada de la función.
