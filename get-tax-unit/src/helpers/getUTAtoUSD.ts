@@ -1,7 +1,7 @@
 import * as cheerio from "cheerio";
-import { GetUtaToIsoType } from "../types/getUTAtoISO";
+import type { GetUtaToIso } from "../types/getUTAtoISO";
 
-const getUTAtoUSD: GetUtaToIsoType = async () => {
+const getUTAtoUSD: GetUtaToIso = async () => {
   const currentYear = new Date().getFullYear();
   let endpointYear = currentYear;
 

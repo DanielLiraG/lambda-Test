@@ -1,7 +1,7 @@
 import * as cheerio from "cheerio";
-import { GetUtaToIsoType } from "../types/getUTAtoISO";
+import type { GetUtaToIso } from "../types/getUTAtoISO";
 
-const getUTAtoCLP: GetUtaToIsoType = async () => {
+const getUTAtoCLP: GetUtaToIso = async () => {
   const currentYear = new Date().getFullYear();
   const URL_UTA_CLP = `https://www.sii.cl/valores_y_fechas/utm/utm${currentYear}.htm`;
 

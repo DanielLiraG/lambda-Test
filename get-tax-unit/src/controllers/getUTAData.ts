@@ -1,9 +1,8 @@
-import type { RequestHandler } from "express";
-import { GetUTADataType } from "../types/GetUTAData";
+import type { GetUtaData } from "../types/getUTAData";
 import getUTAtoUSD from "../helpers/getUTAtoUSD";
 import getUTAtoCLP from "../helpers/getUTAtoCLP";
 
-const getUTAData: GetUTADataType = async () => {
+const getUTAData: GetUtaData = async () => {
   const response = {
     uta_clp: 0,
     uta_usd: 0,
