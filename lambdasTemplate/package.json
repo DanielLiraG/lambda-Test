@@ -4,7 +4,6 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "tsc && cp .env ./dist/src/.env && cp node_modules -r ./dist/src/node_modules/",
     "deploy": "tsc",
     "watch": "tsc -w",
     "lint": "eslint --ignore-path .gitignore .",
@@ -17,13 +16,17 @@
   "dependencies": {
     "aws4-axios": "^3.3.0",
     "axios": "^1.5.0",
-    "dotenv": "^16.3.1"
+    "dotenv": "^16.3.1",
+    "esbuild": "^0.14.14",
+    "graphql-request": "^6.1.0",
+    "lodash": "^4.17.21"
   },
   "devDependencies": {
     "@swc/core": "^1.3.82",
     "@swc/jest": "^0.2.29",
     "@types/aws-lambda": "^8.10.119",
     "@types/jest": "^29.5.4",
+    "@types/lodash": "^4.14.199",
     "@typescript-eslint/eslint-plugin": "^6.5.0",
     "@typescript-eslint/parser": "^6.5.0",
     "eslint": "^8.48.0",
