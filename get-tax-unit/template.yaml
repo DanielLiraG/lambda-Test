@@ -21,12 +21,17 @@ Resources:
           Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
           Properties:
             Path: /
-            Method: get
+            Method: GET
+        All:
+          Type: Api
+          Properties:
+            Path: /{proxy+}
+            Method: ANY
     Metadata: # Manage esbuild properties
       BuildMethod: esbuild
       BuildProperties:
         Minify: true
         Target: "es2020"
         Sourcemap: false
-        EntryPoints: 
-        - index.ts
+        EntryPoints:
+          - index.ts
