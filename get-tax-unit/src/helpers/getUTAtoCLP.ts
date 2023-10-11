@@ -1,13 +1,11 @@
 import * as cheerio from "cheerio";
 import type { GetUtaToIso } from "../types/getUTAtoISO";
 
-const getUTAtoCLP: GetUtaToIso = async () => {
-  const currentYear = new Date().getFullYear();
-  const URL_UTA_CLP = `https://www.sii.cl/valores_y_fechas/utm/utm${currentYear}.htm`;
+const getUTAtoCLP: GetUtaToIso = async ({ year, month }) => {
+  const URL_UTA_CLP = `https://www.sii.cl/valores_y_fechas/utm/utm${year}.htm`;
 
   const offsetHeader = 1;
-  const currentMonth = new Date().getMonth();
-  const monthInTable = currentMonth + offsetHeader;
+  const monthInTable = month + offsetHeader;
 
   return new Promise((resolve) => {
     fetch(URL_UTA_CLP)
@@ -15,17 +13,13 @@ const getUTAtoCLP: GetUtaToIso = async () => {
       .then((html) => {
         const $ = cheerio.load(html);
         // * Parse UtaCLP string value
-        const separatorPlaceholder = ";DECIMAL-SEPARATOR;";
-        let utaCLPString = $(
+        const utaCLPString = $(
           `tbody tr:nth-child(${monthInTable}) td:nth-child(3)`,
         )
           .text()
-          .replace(",", separatorPlaceholder);
-        if (utaCLPString.includes(separatorPlaceholder)) {
-          utaCLPString = utaCLPString
-            .replace(/\./g, "")
-            .replace(";DECIMAL-SEPARATOR;", ".");
-        }
+          .replace(/,/g, "X")
+          .replace(/\./g, "")
+          .replace(/X/g, ".");
 
         const utaCLP = Number(utaCLPString);
         resolve([null, utaCLP]);

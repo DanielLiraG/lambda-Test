@@ -8,15 +8,24 @@ const getUTAData: GetUtaData = async () => {
     uta_usd: 0,
   };
 
+  const todayDate = new Date();
+
   // * UTA TO CLP
-  const [errorCLP, resCLP] = await getUTAtoCLP();
+  const [errorCLP, resCLP] = await getUTAtoCLP({
+    year: todayDate.getFullYear(),
+    month: todayDate.getMonth(),
+  });
   if (errorCLP) {
     throw errorCLP;
   }
   if (resCLP) response.uta_clp = resCLP;
 
   // * UTA TO USD
-  const [errorUSD, resUSD] = await getUTAtoUSD();
+  const [errorUSD, resUSD] = await getUTAtoUSD({
+    year: 2023, // todayDate.getFullYear(),
+    month: 0, // todayDate.getMonth(),
+    day: 1, // todayDate.getDate()
+  });
   if (errorUSD) {
     throw errorUSD;
   }
