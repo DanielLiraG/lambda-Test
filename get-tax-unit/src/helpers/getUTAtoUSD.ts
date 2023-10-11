@@ -1,30 +1,23 @@
 import * as cheerio from "cheerio";
+import { isNumber } from "lodash";
 import type { GetUtaToIso } from "../types/getUTAtoISO";
+import { getLastDayOfMonth } from "./date";
 
-const getUTAtoUSD: GetUtaToIso = async () => {
-  const currentYear = new Date().getFullYear();
-  let endpointYear = currentYear;
-
-  const offsetHeader = 2;
-  const currentMonth = new Date().getMonth();
-  let monthInTable = currentMonth + offsetHeader;
-
-  let currentDay = new Date().getDate();
-  // * In the first days of year the fields are empty, look for them in the prev year.
-  if (currentDay <= 2 && currentMonth === 0) {
-    currentDay = 30;
-    monthInTable = 11 + offsetHeader;
-    endpointYear -= 1;
+const getUTAtoUSD: GetUtaToIso = async ({ year, month, day }) => {
+  if (!isNumber(year) || !isNumber(month) || !isNumber(day)) {
+    return [new Error("Bad Request"), null];
   }
 
-  const URL_UTA_USD = `https://www.sii.cl/valores_y_fechas/dolar/dolar${endpointYear}.htm`;
+  const offsetHeader = 2;
+
+  const URL_UTA_USD = `https://www.sii.cl/valores_y_fechas/dolar/dolar${year}.htm`;
 
   return new Promise((resolve) => {
     fetch(URL_UTA_USD)
       .then((response) => response.text())
-      .then((html) => {
-        let currDay = currentDay;
-        let tableMonth = monthInTable;
+      .then(async (html) => {
+        let currDay = day;
+        let tableMonth = month + offsetHeader;
 
         const $ = cheerio.load(html);
 
@@ -49,17 +42,45 @@ const getUTAtoUSD: GetUtaToIso = async () => {
             currDay = 31;
             tableMonth -= 1;
             jumpAboveRow = 0;
+
+            // * If tableMonth is less than 2, it's not a month, looking for prev month.
+            if (tableMonth < 2 && !usd) break;
           }
 
           condition = usd;
-          resolve([null, condition]);
 
           // ? EMERGENCY EXIT
           counter += 1;
           if (counter === 31) {
-            console.log("BREAK");
             break;
           }
+        }
+
+        // * If it didn't find a value in the searched month, it searches in the previous month.
+        if (!condition) {
+          // * Get the currentDate
+          const lookingDate = new Date(`${year}-${month + 1}-${day} 00:00:01`);
+
+          // * Set lookingDate in the prev month at last day.
+          lookingDate.setMonth(
+            lookingDate.getMonth() - 1,
+          );
+          lookingDate.setDate(
+            getLastDayOfMonth(
+              lookingDate.getFullYear(),
+              lookingDate.getMonth(),
+            ),
+          );
+
+          resolve(
+            await getUTAtoUSD({
+              year: lookingDate.getFullYear(),
+              day: lookingDate.getDate(),
+              month: lookingDate.getMonth(),
+            }),
+          );
+        } else {
+          resolve([null, condition]);
         }
       })
       .catch((err) => {
