@@ -1,5 +1,5 @@
 export type PokeData = {
-  id: number
+  id: number;
   name: string;
   height: number;
   weight: number;

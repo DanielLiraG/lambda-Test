@@ -33,7 +33,9 @@ const getPokeData: GetPokeData = async ({ limit = 76, offset = 42 } = {}) => {
     const parsedResponse: PokeDataList = parseRawPokeData(response);
 
     // * Sort ASC pokemon list by id
-    const sortedResponse: PokeDataList = parsedResponse.sort((a, b) => a.id - b.id)
+    const sortedResponse: PokeDataList = parsedResponse.sort(
+      (a, b) => a.id - b.id,
+    );
 
     return [null, sortedResponse];
   } catch (error) {
