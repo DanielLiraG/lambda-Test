@@ -24,7 +24,7 @@ const getUTAData: GetUtaData = async () => {
   const [errorUSD, resUSD] = await getUTAtoUSD({
     year: todayDate.getFullYear(),
     month: todayDate.getMonth(),
-    day: todayDate.getDate()
+    day: todayDate.getDate(),
   });
   if (errorUSD) {
     throw errorUSD;

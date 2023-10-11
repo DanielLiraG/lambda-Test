@@ -62,9 +62,7 @@ const getUTAtoUSD: GetUtaToIso = async ({ year, month, day }) => {
           const lookingDate = new Date(`${year}-${month + 1}-${day} 00:00:01`);
 
           // * Set lookingDate in the prev month at last day.
-          lookingDate.setMonth(
-            lookingDate.getMonth() - 1,
-          );
+          lookingDate.setMonth(lookingDate.getMonth() - 1);
           lookingDate.setDate(
             getLastDayOfMonth(
               lookingDate.getFullYear(),
