@@ -1,30 +1,20 @@
-import { omit } from "lodash";
 import type { ParseRawPokeData } from "../types/ParseRawPokeData";
-import type { PokeData, PokeDataList } from "../types/PokeData";
+import { omit } from "lodash";
 
 const parseRawPokeData: ParseRawPokeData = (response) => {
-  const parsedResponse: PokeDataList = [];
+  const rawPokemons = response.pokemon_v2_pokemon || []
 
-  for (const pokemons of response.gen3_species) {
-    if (pokemons.pokemon_v2_pokemons.length) {
-      // * Ignoring alola state and take the first element.
-      const pokemon = pokemons.pokemon_v2_pokemons[0];
-      const pokemonData: PokeData = {
-        ...omit(pokemon, ["pokemon_v2_pokemonstats"]),
-      };
+  return rawPokemons.map(pokemon => {
+    const statsObject = pokemon.pokemon_v2_pokemonstats.reduce((acc, stat) => {
+      acc[stat.pokemon_v2_stat.name] = stat.base_stat;
+      return acc;
+    }, {} as { [key: string]: number });
 
-      // * Assign each stat like key: value.
-      for (const stat of pokemon.pokemon_v2_pokemonstats) {
-        if (stat.pokemon_v2_stat && stat.pokemon_v2_stat.name) {
-          pokemonData[stat.pokemon_v2_stat.name] = stat.base_stat;
-        }
-      }
-
-      parsedResponse.push(pokemonData);
+    return {
+      ...omit(pokemon, ['pokemon_v2_pokemonstats']),
+      ...statsObject,
     }
-  }
-
-  return parsedResponse;
+});
 };
 
 export default parseRawPokeData;

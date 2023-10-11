@@ -2,27 +2,24 @@ import { request, gql } from "graphql-request";
 
 import parseRawPokeData from "../helpers/parseRawPokeData";
 import type { RawPokeData } from "../types/RawPokeData";
-import type { PokeDataList } from "../types/PokeData";
+import type { PokeData, PokeDataList } from "../types/PokeData";
 import type { GetPokeData } from "../types/GetPokeData";
 
-const getPokeData: GetPokeData = async ({ limit = 76, offset = 43 } = {}) => {
+const getPokeData: GetPokeData = async ({ limit = 76, offset = 42 } = {}) => {
   try {
     const query = gql`
       query getPokeData {
-        gen3_species: pokemon_v2_pokemonspecies(limit: ${
-          limit - offset
-        }, offset: ${offset}) {
-          pokemon_v2_pokemons {
-            pokemon_v2_pokemonstats {
-              base_stat
-              pokemon_v2_stat {
-                name
-              }
+        pokemon_v2_pokemon(limit: ${limit - offset}, offset: ${offset}) {
+          height
+          id
+          name
+          pokemon_v2_pokemonstats {
+            base_stat
+            pokemon_v2_stat {
+              name
             }
-            weight
-            name
-            height
           }
+          weight
         }
       }
     `;
@@ -35,7 +32,10 @@ const getPokeData: GetPokeData = async ({ limit = 76, offset = 43 } = {}) => {
     // * Parse the RawPokeData.
     const parsedResponse: PokeDataList = parseRawPokeData(response);
 
-    return [null, parsedResponse];
+    // * Sort ASC pokemon list by id
+    const sortedResponse: PokeDataList = parsedResponse.sort((a, b) => a.id - b.id)
+
+    return [null, sortedResponse];
   } catch (error) {
     return [error as Error, null];
   }
